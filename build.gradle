@@ -1,0 +1,17 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+buildscript {
+    ext.kotlin_version = "2.0.0"
+    ext.hilt_version = "2.51.1"
+    ext.android_gradle_version = "8.11"
+
+}
+
+plugins {
+    alias(libs.plugins.android.application) apply false
+    alias(libs.plugins.jetbrains.kotlin.android) apply false
+    id 'com.google.dagger.hilt.android' version "$hilt_version" apply false
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
