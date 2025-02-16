@@ -11,6 +11,7 @@ import okhttp3.Request
 import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import ru.weather.BuildConfig
+import ru.weather.dto.CitySearchResult
 import ru.weather.dto.WeatherReport
 import java.io.IOException
 import java.util.concurrent.TimeUnit
@@ -70,9 +71,11 @@ class ApiService {
             })
     }
 
-    fun getCoord(callback: WeatherCallback<Any>) {
+    private val typeTokenCity = object : TypeToken<List<CitySearchResult>>() {}
+
+    fun getCoordinates(city: String, callback: WeatherCallback<List<CitySearchResult>>) {
         val request = Request.Builder()
-            .url("${BASE_URL}geo/1.0/direct?q=$cityName&limit=5&appid=${BuildConfig.API_KEY}")
+            .url("${BASE_URL}geo/1.0/direct?q=$city&limit=5&appid=${BuildConfig.API_KEY}&lang=$language")
             .build()
 
         client.newCall(request)
@@ -82,7 +85,7 @@ class ApiService {
                     val responseBody =
                         response.body?.string() ?: throw RuntimeException("body is null")
                     try {
-                        callback.onSuccess(Gson().fromJson(responseBody, typeToken))
+                        callback.onSuccess(Gson().fromJson(responseBody, typeTokenCity))
                     } catch (e: Exception) {
                         callback.onError(e)
                     }

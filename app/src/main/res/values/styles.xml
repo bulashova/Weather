@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="TextStyle" parent="@style/TextAppearance.AppCompat.Body1">
+        <item name="android:textSize">@dimen/text_basic</item>
+    </style>
+
+    <style name="Button.Weather" parent="ThemeOverlay.AppCompat">
+        <item name="backgroundTint">@color/button</item>
+        <item name="android:textAppearance">@style/TextButton</item>
+        <item name="cornerRadius">10dp</item>
+        <item name="android:textColor">@color/text</item>
+    </style>
+
+    <style name="TextButton" parent="@style/TextAppearance.AppCompat.Body1">
+        <item name="android:textSize">@dimen/text_basic</item>
+        <item name="android:textColor">@color/text</item>
+    </style>
+
+    <style name="TextGreyStyle" parent="@style/TextAppearance.AppCompat.Body1">
+        <item name="android:textSize">@dimen/text_basic</item>
+        <item name="android:textColor">@color/grey</item>
+    </style>
+
+</resources>

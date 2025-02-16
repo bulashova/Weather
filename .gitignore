@@ -58,7 +58,7 @@ captures/
 ### Gradle ###
 !gradle/wrapper/gradle-wrapper.jar
 
-google-services.json
+app/google-services.json
 
 pic/
 README.md

@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     id 'dagger.hilt.android.plugin'
     id 'kotlin-kapt'
+    id 'com.google.gms.google-services'
 }
 
 Properties authProperties = new Properties()
@@ -93,4 +94,10 @@ dependencies {
 
     implementation libs.androidx.room.ktx
     kapt libs.androidx.room.compiler
+
+    implementation libs.material.v130
+    implementation libs.androidx.navigation.ui.ktx
+    implementation libs.androidx.navigation.fragment.ktx
+    implementation libs.firebase.bom
+    implementation libs.translate
 }

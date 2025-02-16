@@ -8,6 +8,7 @@ import ru.weather.api.ApiService
 import ru.weather.dao.CityDao
 import ru.weather.dao.WeatherDao
 import ru.weather.dto.City
+import ru.weather.dto.CitySearchResult
 import ru.weather.dto.WeatherReport
 import ru.weather.entity.CityEntity.Companion.fromDto
 import ru.weather.entity.ListEntity
@@ -30,6 +31,10 @@ class WeatherRepositoryImpl @Inject constructor(
 
     override fun get(callback: ApiService.WeatherCallback<WeatherReport>) {
         apiService.get(callback)
+    }
+
+    override fun getCoordinates(city: String, callback: ApiService.WeatherCallback<List<CitySearchResult>>) {
+        apiService.getCoordinates(city, callback)
     }
 
     override suspend fun fillDb(weather: List<ru.weather.dto.List>, city: City) {
