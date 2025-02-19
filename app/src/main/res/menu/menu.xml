@@ -12,7 +12,7 @@
         <menu>
             <item
                 android:id="@+id/another"
-                android:icon="@drawable/ic_baseline_edit_24"
+                android:icon="@drawable/ic_baseline_location_on_24"
                 android:title="@string/choose_another"
                 app:iconTint="?attr/textColorAlertDialogListItem" />
         </menu>

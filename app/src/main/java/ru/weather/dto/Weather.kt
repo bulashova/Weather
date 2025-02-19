@@ -1,7 +1,6 @@
 package ru.weather.dto
 
 import com.google.gson.annotations.SerializedName
-import java.time.LocalDateTime
 
 data class WeatherReport(
     val id: Long? = null,
@@ -9,14 +8,14 @@ data class WeatherReport(
     val message: String? = null,
     val cnt: Long? = null,
     val list: ArrayList<List>? = arrayListOf(),
-    val city: City? = null
+    val city: City? = City()
 )
 
 data class List(
     val id: Long? = null,
     val dt: Long? = null,
     val main: Main? = null,
-    val weather: kotlin.collections.List<Weather>? = listOf(), //погодные явления
+    val weather: kotlin.collections.List<Weather?> = listOf(), //погодные явления
     val clouds: Clouds? = null,
     val wind: Wind? = null,
     val visibility: Long? = null,
@@ -78,7 +77,8 @@ data class City(
     val population: Long? = null,
     val timezone: Long? = null,
     val sunrise: Long? = null,
-    val sunset: Long? = null
+    val sunset: Long? = null,
+    var state: String? = null,
 )
 
 data class Coord(

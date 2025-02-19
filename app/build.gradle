@@ -37,10 +37,12 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             buildConfigField "String", "BASE_URL", "\"https://api.openweathermap.org/\""
+            buildConfigField "String", "ICON_URL", "\"https://openweathermap.org/img/wn/\""
         }
         debug {
             manifestPlaceholders.usesCleartextTraffic = true
             buildConfigField "String", "BASE_URL", "\"https://api.openweathermap.org/\""
+            buildConfigField "String", "ICON_URL", "\"https://openweathermap.org/img/wn/\""
         }
     }
     compileOptions {
@@ -100,4 +102,6 @@ dependencies {
     implementation libs.androidx.navigation.fragment.ktx
     implementation libs.firebase.bom
     implementation libs.translate
+
+    implementation libs.glide
 }

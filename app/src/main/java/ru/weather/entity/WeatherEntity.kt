@@ -10,7 +10,6 @@ import ru.weather.dto.Snow
 import ru.weather.dto.Sys
 import ru.weather.dto.Weather
 import ru.weather.dto.Wind
-import java.time.LocalDateTime
 
 @Entity
 data class ListEntity(
@@ -48,7 +47,7 @@ data class ListEntity(
         id,
         dt,
         main?.toDto(),
-        weather?.toDto() as List<Weather>,
+        weather = emptyList<Weather>().plus(weather?.toDto()),
         clouds?.toDto(),
         wind?.toDto(),
         visibility,
@@ -65,7 +64,7 @@ data class ListEntity(
                 dto.id,
                 dto.dt,
                 dto.main?.let { MainEmbeddable.fromDto(it) },
-                dto.weather?.let { WeatherEmbeddable.fromDto(it.first()) },
+                dto.weather?.let { it.first()?.let { it1 -> WeatherEmbeddable.fromDto(it1) } },
                 dto.clouds?.let { CloudsEmbeddable.fromDto(it) },
                 dto.wind?.let { WindEmbeddable.fromDto(it) },
                 dto.visibility,

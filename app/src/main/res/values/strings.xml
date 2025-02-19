@@ -3,4 +3,16 @@
     <string name="search">Search</string>
     <string name="choose_another">Choose another</string>
     <string name="select_state">Select a state:</string>
+    <string name="now">Now</string>
+    <string name="day">24 hours</string>
+    <string name="five_days">5 days</string>
+    <string name="wind">Wind</string>
+    <string name="m_s">m/s</string>
+    <string name="wind_gusts">Wind gusts, up to</string>
+    <string name="feels_like">Feels like</string>
+    <string name="humidity">Humidity</string>
+    <string name="clouds">Cloud cover</string>
+    <string name="atmospheric_pressure">Atmospheric pressure</string>
+    <string name="precipitation_probability">Precipitation probability</string>
+    <string name="visibility">Visibility</string>
 </resources>

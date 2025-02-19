@@ -9,8 +9,9 @@ import ru.weather.dto.WeatherReport
 interface WeatherRepository {
 
     val data: Flow<List<ru.weather.dto.List>>
+    val cityData: Flow<List<City>>
 
-    fun get(callback: ApiService.WeatherCallback<WeatherReport>)
+    fun get(lat: Double, lon: Double, callback: ApiService.WeatherCallback<WeatherReport>)
     fun getCoordinates(city: String, callback: ApiService.WeatherCallback<List<CitySearchResult>>)
 
     suspend fun fillDb(weather: List<ru.weather.dto.List>, city: City)

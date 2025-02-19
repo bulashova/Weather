@@ -12,12 +12,15 @@
     <color name="text">#222222</color>
     <color name="grey">#A3A3A5</color>
 
-    <color name="button">#E3E7AF</color>
+<!--    <color name="button">#E3E7AF</color>-->
+    <color name="button">#DAE7CA</color>
     <color name="light_grey">#F4F7FB</color>
 
-    <color name="edit_text_background">#EFF7FE</color>E2ECF5
+    <color name="edit_text_background">#EFF7FE</color>
     <color name="background">#121212</color>
+    <color name="title">#8EAA6D</color>
+    <color name="edit_text_background_op">#D4EFF7FE</color>
+    <color name="card_background">#33A4C67C</color>
+    <color name="card_background_3">#4DA4C67C</color>
+    <color name="card_background_2">#66A4C67C</color>
 </resources>
-
-
-<!--    #DFE4A3-->

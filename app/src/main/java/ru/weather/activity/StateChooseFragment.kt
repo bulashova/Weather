@@ -11,10 +11,13 @@ import androidx.appcompat.app.ActionBar
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import ru.weather.R
 import ru.weather.adapter.CitySearchResultAdapter
+import ru.weather.adapter.OnInteractionListener
 import ru.weather.databinding.StateChooseFragmentBinding
+import ru.weather.dto.CitySearchResult
 import ru.weather.viewmodel.WeatherViewModel
 
 @AndroidEntryPoint
@@ -51,7 +54,18 @@ class StateChooseFragment : Fragment() {
 
         }, viewLifecycleOwner)
 
-        val adapter = CitySearchResultAdapter()
+        val adapter = CitySearchResultAdapter(object : OnInteractionListener {
+            override fun onSelect(city: CitySearchResult) {
+                city.lat?.let {
+                    city.lon?.let { it1 ->
+                        city.state?.let { it2 ->
+                            viewModel.get(it, it1, it2)
+                        }
+                    }
+                }
+                findNavController().navigate(R.id.action_stateChooseFragment_to_nowWeatherFragment)
+            }
+        })
 
         binding.list.adapter = adapter
         viewModel.citySearchResult.observe(viewLifecycleOwner) { cities ->

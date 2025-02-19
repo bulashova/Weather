@@ -10,7 +10,7 @@ import ru.weather.dao.WeatherDao
 import ru.weather.dto.City
 import ru.weather.dto.CitySearchResult
 import ru.weather.dto.WeatherReport
-import ru.weather.entity.CityEntity.Companion.fromDto
+import ru.weather.entity.CityEntity
 import ru.weather.entity.ListEntity
 import ru.weather.entity.toDto
 import ru.weather.entity.toEntity
@@ -29,20 +29,32 @@ class WeatherRepositoryImpl @Inject constructor(
         .map(List<ListEntity>::toDto)
         .flowOn(Dispatchers.Default)
 
-    override fun get(callback: ApiService.WeatherCallback<WeatherReport>) {
-        apiService.get(callback)
+    override val cityData: Flow<List<City>> = cityDao.getCity()
+        .map (List<CityEntity> :: toDto)
+        .flowOn(Dispatchers.Default)
+
+    override fun get(
+        lat: Double,
+        lon: Double,
+        callback: ApiService.WeatherCallback<WeatherReport>
+    ) {
+        apiService.get(lat, lon, callback)
     }
 
-    override fun getCoordinates(city: String, callback: ApiService.WeatherCallback<List<CitySearchResult>>) {
+    override fun getCoordinates(
+        city: String,
+        callback: ApiService.WeatherCallback<List<CitySearchResult>>
+    ) {
         apiService.getCoordinates(city, callback)
     }
 
     override suspend fun fillDb(weather: List<ru.weather.dto.List>, city: City) {
         dao.insert(weather.toEntity())
-        cityDao.insert(fromDto(city))
+        cityDao.insert(emptyList<City>().plus(city).toEntity())
     }
 
     override suspend fun clear() {
         dao.clear()
+        cityDao.clear()
     }
 }

@@ -1,17 +1,20 @@
 package ru.weather.viewmodel
 
-//import ru.weather.model.FeedModel
-//import ru.weather.model.FeedModelState
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import ru.weather.api.ApiService
 import ru.weather.dto.City
 import ru.weather.dto.CitySearchResult
 import ru.weather.dto.WeatherReport
+import ru.weather.model.FeedModel
+import ru.weather.model.FeedModelState
 import ru.weather.repository.WeatherRepository
 import javax.inject.Inject
 
@@ -27,19 +30,27 @@ class WeatherViewModel @Inject constructor(
     val citySearchResult: LiveData<List<CitySearchResult>?>
         get() = _citySearchResult
 
-//    val data: LiveData<FeedModel> = repository.data
-//        .map { weather ->
-//            FeedModel(weather)
-//        }.asLiveData(Dispatchers.Default)
+    private var _nowWeather = MutableLiveData<ru.weather.dto.List>()
+    val nowWeather: LiveData<ru.weather.dto.List>
+        get() = _nowWeather
 
-//    private val _dataState = MutableLiveData<FeedModelState>()
-//    val dataState: LiveData<FeedModelState>
-//        get() = _dataState
-//
-//    private var _emptyDataState = MutableLiveData<Boolean>()
-//    val emptyDataState: LiveData<Boolean>
-//        get() = _emptyDataState
-//
+    val data: LiveData<FeedModel> = repository.data
+        .map { weather ->
+            FeedModel(weather)
+        }.asLiveData(Dispatchers.Default)
+
+    private var _cityData = MutableLiveData<City>()
+    val cityData: LiveData<City>
+        get() = _cityData
+
+    private val _dataState = MutableLiveData<FeedModelState>()
+    val dataState: LiveData<FeedModelState>
+        get() = _dataState
+
+    private var _emptyDataState = MutableLiveData<Boolean>()
+    val emptyDataState: LiveData<Boolean>
+        get() = _emptyDataState
+
     init {
 //        myLocation = MutableLiveData()
 //
@@ -47,12 +58,13 @@ class WeatherViewModel @Inject constructor(
 
     // _dataState.value = FeedModelState(loading = true)
 
-    fun get() {
-        repository.get(
+    fun get(lat: Double, lon: Double, state: String) {
+        repository.get(lat, lon,
             object : ApiService.WeatherCallback<WeatherReport> {
                 override fun onSuccess(result: WeatherReport) {
-                    result.list?.map { it.weather?.first() }
-                    result.list?.let { result.city?.let { it1 -> fillDb(it.toList(), it1) } }
+                    result.list?.map { it.weather.first() }
+                    result.city?.state = state
+                    result.list?.let { result.city?.let { it1 -> fillDb(it, it1) } }
                     println(result)
                 }
 //                    if (result.isEmpty()) _dataState.postValue(FeedModelState(error = true))
@@ -84,12 +96,31 @@ class WeatherViewModel @Inject constructor(
             })
     }
 
-    fun fillDb(weather: List<ru.weather.dto.List>, city: City) = viewModelScope.launch {
-        try {
-            repository.fillDb(weather, city)
-        } catch (e: Exception) {
-            println(e)
+    fun fillDb(weather: List<ru.weather.dto.List>, city: City) =
+        viewModelScope.launch {
+            try {
+                repository.fillDb(weather, city)
+            } catch (e: Exception) {
+                println(e)
+            }
         }
+
+    fun getNowWeather() = viewModelScope.launch {
+        _nowWeather =
+            repository.data
+                .map { weather ->
+                    weather.lastOrNull()
+                }
+                .asLiveData(Dispatchers.Default) as MutableLiveData<ru.weather.dto.List>
+    }
+
+    fun getCity() = viewModelScope.launch {
+        _cityData =
+            repository.cityData
+                .map { city ->
+                    city.lastOrNull()
+                }
+                .asLiveData(Dispatchers.Default) as MutableLiveData<City>
     }
 
     fun clearData() = viewModelScope.launch {

@@ -9,10 +9,6 @@ data class CitySearchResult(
     val lon: Double? = null,
     val country: String? = null,
     var state: String? = null,
-
-    var ruState: String? = null,
-    var ruName: String? = null,
-    var ruCountry: String? = null,
 ) {
     override fun toString(): String = "${name}, $country, ${state}, $lat, $lon \n"
 }

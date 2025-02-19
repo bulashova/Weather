@@ -4,6 +4,12 @@
         <item name="android:textSize">@dimen/text_basic</item>
     </style>
 
+    <style name="TextTitleStyle" parent="@style/TextAppearance.AppCompat.Body1">
+        <item name="android:textSize">@dimen/text_basic</item>
+        <item name="android:textColor">@color/title</item>
+
+    </style>
+
     <style name="Button.Weather" parent="ThemeOverlay.AppCompat">
         <item name="backgroundTint">@color/button</item>
         <item name="android:textAppearance">@style/TextButton</item>
@@ -19,6 +25,10 @@
     <style name="TextGreyStyle" parent="@style/TextAppearance.AppCompat.Body1">
         <item name="android:textSize">@dimen/text_basic</item>
         <item name="android:textColor">@color/grey</item>
+    </style>
+
+    <style name="TextLargeStyle" parent="@style/TextAppearance.AppCompat.Body1">
+        <item name="android:textSize">@dimen/text_large</item>
     </style>
 
 </resources>

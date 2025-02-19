@@ -55,7 +55,8 @@ data class CityEntity(
     val population: Long?,
     val timezone: Long?,
     val sunrise: Long?,
-    val sunset: Long?
+    val sunset: Long?,
+    val state: String?
 ) {
     fun toDto() = City(
         id,
@@ -65,7 +66,8 @@ data class CityEntity(
         population,
         timezone,
         sunrise,
-        sunset
+        sunset,
+        state,
     )
 
     companion object {
@@ -78,7 +80,8 @@ data class CityEntity(
                 dto.population,
                 dto.timezone,
                 dto.sunrise,
-                dto.sunset
+                dto.sunset,
+                dto.state,
             )
     }
 }
@@ -101,3 +104,6 @@ data class CoordEmbeddable(
             )
     }
 }
+
+fun List<CityEntity>.toDto(): List<City> = map(CityEntity::toDto)
+fun List<City>.toEntity(): List<CityEntity> = map { CityEntity.fromDto(it) }

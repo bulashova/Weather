@@ -12,9 +12,20 @@
         <action
             android:id="@+id/action_searchFragment_to_stateChooseFragment"
             app:destination="@id/stateChooseFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_nowWeatherFragment"
+            app:destination="@id/nowWeatherFragment" />
     </fragment>
     <fragment
         android:id="@+id/stateChooseFragment"
         android:name="ru.weather.activity.StateChooseFragment"
-        android:label="StateChooseFragment" />
+        android:label="StateChooseFragment" >
+        <action
+            android:id="@+id/action_stateChooseFragment_to_nowWeatherFragment"
+            app:destination="@id/nowWeatherFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/nowWeatherFragment"
+        android:name="ru.weather.activity.NowWeatherFragment"
+        android:label="NowWeatherFragment" />
 </navigation>

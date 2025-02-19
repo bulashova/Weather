@@ -14,7 +14,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import ru.weather.R
-
 import ru.weather.databinding.SearchFragmentBinding
 import ru.weather.viewmodel.WeatherViewModel
 
@@ -54,17 +53,10 @@ class SearchFragment : Fragment() {
 
         with(binding) {
             search.setOnClickListener {
+                viewModel.clearData()
                 viewModel.getCoordinates(cityName.text.toString())
                 findNavController().navigate(R.id.action_searchFragment_to_stateChooseFragment)
             }
-        }
-        viewModel.citySearchResult.observe(viewLifecycleOwner) { result ->
-            if (result!!.size > 1) {
-                println("SearchFr: ${result.distinctBy { it.state }}")
-                findNavController().navigate(R.id.action_searchFragment_to_stateChooseFragment)
-            }
-            else null
-
         }
         return binding.root
     }

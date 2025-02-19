@@ -40,14 +40,10 @@ class ApiService {
         .build()
 
     private val typeToken = object : TypeToken<WeatherReport>() {}
-
-    private val lat = 59.71
-    private val lon = 30.396
     private val language = "ru"
     private val units = "metric"
-    private val cityName = "Пушкин"
 
-    fun get(callback: WeatherCallback<WeatherReport>) {
+    fun get(lat: Double, lon: Double, callback: WeatherCallback<WeatherReport>) {
         val request = Request.Builder()
             .url("${BASE_URL}data/2.5/forecast?lat=$lat&lon=$lon&appid=${BuildConfig.API_KEY}&lang=$language&units=$units")
             .build()
