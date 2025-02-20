@@ -104,4 +104,6 @@ dependencies {
     implementation libs.translate
 
     implementation libs.glide
+
+    implementation libs.play.services.location
 }

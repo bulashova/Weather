@@ -8,6 +8,7 @@
     <dimen name="text_small">12sp</dimen>
     <dimen name="text_basic">14sp</dimen>
     <dimen name="text_large">48sp</dimen>
+    <dimen name="text_card">24sp</dimen>
 
     <dimen name="size_icon_weather">96dp</dimen>
 </resources>

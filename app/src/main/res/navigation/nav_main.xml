@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_main"
-    app:startDestination="@id/searchFragment">
+    app:startDestination="@id/feedFragment">
 
     <fragment
         android:id="@+id/searchFragment"
@@ -28,4 +28,34 @@
         android:id="@+id/nowWeatherFragment"
         android:name="ru.weather.activity.NowWeatherFragment"
         android:label="NowWeatherFragment" />
+    <fragment
+        android:id="@+id/feedFragment"
+        android:name="ru.weather.activity.FeedFragment"
+        android:label="FeedFragment" >
+        <action
+            android:id="@+id/action_feedFragment_to_updateDataFragment"
+            app:destination="@id/updateDataFragment" />
+        <action
+            android:id="@+id/action_feedFragment_to_selectFragment"
+            app:destination="@id/selectFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/updateDataFragment"
+        android:name="ru.weather.activity.UpdateDataFragment"
+        android:label="UpdateDataFragment" >
+        <action
+            android:id="@+id/action_updateDataFragment_to_nowWeatherFragment"
+            app:destination="@id/nowWeatherFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/selectFragment"
+        android:name="ru.weather.activity.SelectFragment"
+        android:label="SelectFragment" >
+        <action
+            android:id="@+id/action_selectFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+        <action
+            android:id="@+id/action_selectFragment_to_nowWeatherFragment"
+            app:destination="@id/nowWeatherFragment" />
+    </fragment>
 </navigation>

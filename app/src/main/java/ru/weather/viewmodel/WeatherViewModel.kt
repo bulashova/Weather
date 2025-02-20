@@ -25,6 +25,7 @@ class WeatherViewModel @Inject constructor(
 ) : ViewModel() {
 
     private var myLocation = MutableLiveData<Pair<Double, Double>>()
+    private var locality = MutableLiveData<String>()
 
     private var _citySearchResult = MutableLiveData<List<CitySearchResult>?>()
     val citySearchResult: LiveData<List<CitySearchResult>?>
@@ -51,9 +52,25 @@ class WeatherViewModel @Inject constructor(
     val emptyDataState: LiveData<Boolean>
         get() = _emptyDataState
 
-    init {
-//        myLocation = MutableLiveData()
-//
+    fun init() {
+        myLocation = MutableLiveData()
+        locality = MutableLiveData()
+    }
+
+    fun sendMyLocation(location: Pair<Double, Double>) {
+        myLocation.value = location
+    }
+
+    fun sendLocality(state: String) {
+        locality.value = state
+    }
+
+    fun getMyLocation(): LiveData<Pair<Double, Double>>? {
+        return myLocation
+    }
+
+    fun getLocality(): LiveData<String>? {
+        return locality
     }
 
     // _dataState.value = FeedModelState(loading = true)
@@ -62,6 +79,7 @@ class WeatherViewModel @Inject constructor(
         repository.get(lat, lon,
             object : ApiService.WeatherCallback<WeatherReport> {
                 override fun onSuccess(result: WeatherReport) {
+                    clearData()
                     result.list?.map { it.weather.first() }
                     result.city?.state = state
                     result.list?.let { result.city?.let { it1 -> fillDb(it, it1) } }

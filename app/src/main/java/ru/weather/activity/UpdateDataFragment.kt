@@ -14,22 +14,21 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import ru.weather.R
-import ru.weather.databinding.SearchFragmentBinding
+import ru.weather.databinding.UpdateDataFragmentBinding
 import ru.weather.viewmodel.WeatherViewModel
 
 @AndroidEntryPoint
-class SearchFragment : Fragment() {
+class UpdateDataFragment : Fragment() {
+    val viewModel by activityViewModels<WeatherViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        val binding = UpdateDataFragmentBinding.inflate(layoutInflater, container, false)
 
-        val viewModel by activityViewModels<WeatherViewModel>()
-        val binding = SearchFragmentBinding.inflate(layoutInflater, container, false)
-
-        activity?.setTitle(R.string.search)
+        activity?.setTitle(R.string.app_name)
 
         val actionBar: ActionBar? = (activity as MainActivity?)!!.supportActionBar
         actionBar!!.setHomeButtonEnabled(false)
@@ -48,14 +47,25 @@ class SearchFragment : Fragment() {
                 super.onPrepareMenu(menu)
                 menu.clear()
             }
-
         }, viewLifecycleOwner)
 
-        with(binding) {
-            search.setOnClickListener {
-                viewModel.getCoordinates(cityName.text.toString())
-                findNavController().navigate(R.id.action_searchFragment_to_stateChooseFragment)
+        viewModel.getCity()
+        viewModel.cityData.observe(viewLifecycleOwner) { city ->
+            city.coord?.lat?.let {
+                city.coord.lon?.let { it1 ->
+                    city.state?.let { it2 ->
+                        try {
+                            viewModel.get(
+                                it,
+                                it1, it2
+                            )
+                        } catch (exception: Exception) {
+                            findNavController().navigate(R.id.action_updateDataFragment_to_nowWeatherFragment)
+                        }
+                    }
+                }
             }
+            findNavController().navigate(R.id.action_updateDataFragment_to_nowWeatherFragment)
         }
         return binding.root
     }

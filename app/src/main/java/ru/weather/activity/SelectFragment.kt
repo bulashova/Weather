@@ -12,13 +12,18 @@ import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.BaseTransientBottomBar
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import ru.weather.R
-import ru.weather.databinding.SearchFragmentBinding
+import ru.weather.databinding.SelectFragmentBinding
 import ru.weather.viewmodel.WeatherViewModel
 
 @AndroidEntryPoint
-class SearchFragment : Fragment() {
+class SelectFragment : Fragment() {
+
+    private lateinit var location: Pair<Double, Double>
+    private lateinit var state: String
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,9 +32,9 @@ class SearchFragment : Fragment() {
     ): View? {
 
         val viewModel by activityViewModels<WeatherViewModel>()
-        val binding = SearchFragmentBinding.inflate(layoutInflater, container, false)
+        val binding = SelectFragmentBinding.inflate(layoutInflater, container, false)
 
-        activity?.setTitle(R.string.search)
+        activity?.setTitle(R.string.app_name)
 
         val actionBar: ActionBar? = (activity as MainActivity?)!!.supportActionBar
         actionBar!!.setHomeButtonEnabled(false)
@@ -52,9 +57,35 @@ class SearchFragment : Fragment() {
         }, viewLifecycleOwner)
 
         with(binding) {
+            locate.setOnClickListener {
+                viewModel.getMyLocation()?.value?.let {
+                    location = Pair(it.first, it.second)
+                }
+                viewModel.getLocality()?.value?.let {
+                    state = it
+                }
+
+                try {
+                    viewModel.get(location.first, location.second, state)
+                } catch (e: Exception){
+
+                    Snackbar.make(
+                        root, R.string.check_internet_connection,
+                        BaseTransientBottomBar.LENGTH_INDEFINITE
+                    )
+                        .setAction(R.string.ok) {
+                        }.show()
+
+                }
+
+                viewModel.data.observe(viewLifecycleOwner) { weather ->
+                    if (weather.weather.isNotEmpty()) {
+                        findNavController().navigate(R.id.action_selectFragment_to_nowWeatherFragment)
+                    }
+                }
+            }
             search.setOnClickListener {
-                viewModel.getCoordinates(cityName.text.toString())
-                findNavController().navigate(R.id.action_searchFragment_to_stateChooseFragment)
+                findNavController().navigate(R.id.action_selectFragment_to_searchFragment)
             }
         }
         return binding.root

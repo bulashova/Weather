@@ -27,6 +27,8 @@ navigationUiKtx = "2.8.7"
 navigationFragmentKtx = "2.8.7"
 translate = "17.0.3"
 
+playServicesLocation = "21.3.0"
+
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomCompiler" }
@@ -59,7 +61,8 @@ androidx-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation
 androidx-navigation-fragment-ktx = { group = "androidx.navigation", name = "navigation-fragment-ktx", version.ref = "navigationFragmentKtx" }
 translate = { module = "com.google.mlkit:translate", version.ref = "translate" }
 
+play-services-location = { group = "com.google.android.gms", name = "play-services-location", version.ref = "playServicesLocation" }
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-

@@ -11,9 +11,14 @@
         app:showAsAction="always">
         <menu>
             <item
-                android:id="@+id/another"
+                android:id="@+id/locale"
                 android:icon="@drawable/ic_baseline_location_on_24"
-                android:title="@string/choose_another"
+                android:title="@string/locate"
+                app:iconTint="?attr/textColorAlertDialogListItem" />
+            <item
+                android:id="@+id/another"
+                android:icon="@drawable/ic_baseline_search_24"
+                android:title="@string/search"
                 app:iconTint="?attr/textColorAlertDialogListItem" />
         </menu>
     </item>

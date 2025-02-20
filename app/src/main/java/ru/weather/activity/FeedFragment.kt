@@ -14,22 +14,21 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import ru.weather.R
-import ru.weather.databinding.SearchFragmentBinding
+import ru.weather.databinding.FeedFragmentBinding
 import ru.weather.viewmodel.WeatherViewModel
 
 @AndroidEntryPoint
-class SearchFragment : Fragment() {
-
+class FeedFragment : Fragment() {
+    val viewModel by activityViewModels<WeatherViewModel>()
+    private lateinit var location: Pair<Double, Double>
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        val binding = FeedFragmentBinding.inflate(layoutInflater, container, false)
 
-        val viewModel by activityViewModels<WeatherViewModel>()
-        val binding = SearchFragmentBinding.inflate(layoutInflater, container, false)
-
-        activity?.setTitle(R.string.search)
+        activity?.setTitle(R.string.app_name)
 
         val actionBar: ActionBar? = (activity as MainActivity?)!!.supportActionBar
         actionBar!!.setHomeButtonEnabled(false)
@@ -48,13 +47,18 @@ class SearchFragment : Fragment() {
                 super.onPrepareMenu(menu)
                 menu.clear()
             }
-
         }, viewLifecycleOwner)
 
-        with(binding) {
-            search.setOnClickListener {
-                viewModel.getCoordinates(cityName.text.toString())
-                findNavController().navigate(R.id.action_searchFragment_to_stateChooseFragment)
+
+        viewModel.getMyLocation()?.value?.let {
+            location = Pair(it.first, it.second)
+        }
+
+        viewModel.data.observe(viewLifecycleOwner) { weather ->
+            if (weather.weather.isEmpty()) {
+                findNavController().navigate(R.id.action_feedFragment_to_selectFragment)
+            } else {
+                findNavController().navigate(R.id.action_feedFragment_to_updateDataFragment)
             }
         }
         return binding.root

@@ -31,4 +31,8 @@
         <item name="android:textSize">@dimen/text_large</item>
     </style>
 
+    <style name="TextTempStyle" parent="@style/TextAppearance.AppCompat.Body1">
+        <item name="android:textSize">@dimen/text_card</item>
+    </style>
+
 </resources>

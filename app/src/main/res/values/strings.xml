@@ -15,4 +15,8 @@
     <string name="atmospheric_pressure">Atmospheric pressure</string>
     <string name="precipitation_probability">Precipitation probability</string>
     <string name="visibility">Visibility</string>
+    <string name="check_internet_connection">Check your internet connection</string>
+    <string name="ok">ОК</string>
+    <string name="locate">Locate</string>
+
 </resources>

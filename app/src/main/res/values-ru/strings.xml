@@ -15,4 +15,8 @@
     <string name="atmospheric_pressure">Атмосферное давление</string>
     <string name="precipitation_probability">Вероятность осадков</string>
     <string name="visibility">Видимость</string>
+    <string name="check_internet_connection">Проверьте интернет соединение</string>
+    <string name="ok">ОК</string>
+    <string name="locate">Местоположение</string>
+
 </resources>
