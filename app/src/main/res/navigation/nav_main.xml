@@ -27,7 +27,11 @@
     <fragment
         android:id="@+id/nowWeatherFragment"
         android:name="ru.weather.activity.NowWeatherFragment"
-        android:label="NowWeatherFragment" />
+        android:label="NowWeatherFragment" >
+        <action
+            android:id="@+id/action_nowWeatherFragment_to_dayWeatherFragment"
+            app:destination="@id/dayWeatherFragment" />
+    </fragment>
     <fragment
         android:id="@+id/feedFragment"
         android:name="ru.weather.activity.FeedFragment"
@@ -56,6 +60,14 @@
             app:destination="@id/searchFragment" />
         <action
             android:id="@+id/action_selectFragment_to_nowWeatherFragment"
+            app:destination="@id/nowWeatherFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/dayWeatherFragment"
+        android:name="ru.weather.activity.DayWeatherFragment"
+        android:label="DayWeatherFragment" >
+        <action
+            android:id="@+id/action_dayWeatherFragment_to_nowWeatherFragment"
             app:destination="@id/nowWeatherFragment" />
     </fragment>
 </navigation>

@@ -10,7 +10,10 @@ import ru.weather.entity.ListEntity
 @Dao
 interface WeatherDao {
 
-    @Query("SELECT * FROM ListEntity ORDER BY id DESC")
+//    @Query("SELECT * FROM ListEntity ORDER BY id DESC")
+//    fun getAll(): Flow<List<ListEntity>>
+
+    @Query("SELECT * FROM ListEntity ORDER BY id")
     fun getAll(): Flow<List<ListEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

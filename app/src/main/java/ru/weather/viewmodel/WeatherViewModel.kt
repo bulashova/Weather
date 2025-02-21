@@ -16,6 +16,7 @@ import ru.weather.dto.WeatherReport
 import ru.weather.model.FeedModel
 import ru.weather.model.FeedModelState
 import ru.weather.repository.WeatherRepository
+import ru.weather.util.Translator
 import javax.inject.Inject
 
 //@OptIn(ExperimentalCoroutinesApi::class)
@@ -40,6 +41,11 @@ class WeatherViewModel @Inject constructor(
             FeedModel(weather)
         }.asLiveData(Dispatchers.Default)
 
+    val dayData: LiveData<FeedModel> = repository.data
+        .map { weather ->
+            FeedModel(weather.take(8))
+        }.asLiveData(Dispatchers.Default)
+
     private var _cityData = MutableLiveData<City>()
     val cityData: LiveData<City>
         get() = _cityData
@@ -55,6 +61,7 @@ class WeatherViewModel @Inject constructor(
     fun init() {
         myLocation = MutableLiveData()
         locality = MutableLiveData()
+        Translator.downloadModal()
     }
 
     fun sendMyLocation(location: Pair<Double, Double>) {
@@ -127,7 +134,7 @@ class WeatherViewModel @Inject constructor(
         _nowWeather =
             repository.data
                 .map { weather ->
-                    weather.lastOrNull()
+                    weather.firstOrNull()
                 }
                 .asLiveData(Dispatchers.Default) as MutableLiveData<ru.weather.dto.List>
     }

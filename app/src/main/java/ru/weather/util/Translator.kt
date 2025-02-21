@@ -41,4 +41,14 @@ object Translator {
                 println(exception)
             }
     }
+
+    fun downloadModal() {
+        enRuTranslator.downloadModelIfNeeded(conditions)
+            .addOnSuccessListener { result ->
+                println(result)
+            }
+            .addOnFailureListener { exception ->
+                println(exception)
+            }
+    }
 }

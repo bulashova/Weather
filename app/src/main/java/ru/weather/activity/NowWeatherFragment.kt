@@ -10,8 +10,10 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import ru.weather.BuildConfig.ICON_URL
+import ru.weather.R
 import ru.weather.databinding.NowWeatherFragmentBinding
 import ru.weather.glide.load
 import ru.weather.util.DateConverter
@@ -49,6 +51,10 @@ class NowWeatherFragment : Fragment() {
                     activity?.setTitle(city.name)
                     city.country?.let {
                         country.text = Locale("", it).displayCountry
+                    }
+
+                    todayWeather.setOnClickListener {
+                        findNavController().navigate(R.id.action_nowWeatherFragment_to_dayWeatherFragment)
                     }
                 }
             }

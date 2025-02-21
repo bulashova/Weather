@@ -4,7 +4,7 @@
     <string name="choose_another">Выбрать другой</string>
     <string name="select_state">Выберите регион:</string>
     <string name="now">Сейчас</string>
-    <string name="day">24 часа</string>
+    <string name="day">Сегодня</string>
     <string name="five_days">5 дней</string>
     <string name="wind">Ветер</string>
     <string name="m_s">м/с</string>

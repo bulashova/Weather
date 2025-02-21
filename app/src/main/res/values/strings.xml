@@ -4,7 +4,7 @@
     <string name="choose_another">Choose another</string>
     <string name="select_state">Select a state:</string>
     <string name="now">Now</string>
-    <string name="day">24 hours</string>
+    <string name="day">Today</string>
     <string name="five_days">5 days</string>
     <string name="wind">Wind</string>
     <string name="m_s">m/s</string>
