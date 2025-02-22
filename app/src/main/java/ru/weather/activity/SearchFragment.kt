@@ -12,9 +12,12 @@ import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.BaseTransientBottomBar
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import ru.weather.R
 import ru.weather.databinding.SearchFragmentBinding
+import ru.weather.util.AndroidUtils
 import ru.weather.viewmodel.WeatherViewModel
 
 @AndroidEntryPoint
@@ -53,8 +56,19 @@ class SearchFragment : Fragment() {
 
         with(binding) {
             search.setOnClickListener {
-                viewModel.getCoordinates(cityName.text.toString())
-                findNavController().navigate(R.id.action_searchFragment_to_stateChooseFragment)
+                val text = cityName.text?.toString()
+                if (!text.isNullOrBlank()) {
+                    viewModel.getCoordinates(cityName.text.toString())
+                    findNavController().navigate(R.id.action_searchFragment_to_stateChooseFragment)
+                } else {
+                    AndroidUtils.hideKeyboard(requireView())
+                    Snackbar.make(
+                        binding.root, R.string.error_empty_name,
+                        BaseTransientBottomBar.LENGTH_INDEFINITE
+                    )
+                        .setAction(android.R.string.ok) {
+                        }.show()
+                }
             }
         }
         return binding.root

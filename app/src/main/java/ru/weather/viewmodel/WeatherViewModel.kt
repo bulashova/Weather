@@ -19,7 +19,6 @@ import ru.weather.repository.WeatherRepository
 import ru.weather.util.Translator
 import javax.inject.Inject
 
-//@OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
 class WeatherViewModel @Inject constructor(
     private val repository: WeatherRepository,
@@ -80,9 +79,8 @@ class WeatherViewModel @Inject constructor(
         return locality
     }
 
-    // _dataState.value = FeedModelState(loading = true)
-
     fun get(lat: Double, lon: Double, state: String) {
+        _dataState.value = FeedModelState(loading = true)
         repository.get(lat, lon,
             object : ApiService.WeatherCallback<WeatherReport> {
                 override fun onSuccess(result: WeatherReport) {
@@ -90,10 +88,9 @@ class WeatherViewModel @Inject constructor(
                     result.list?.map { it.weather.first() }
                     result.city?.state = state
                     result.list?.let { result.city?.let { it1 -> fillDb(it, it1) } }
-                    println(result)
+                    if (result.list?.isEmpty() == true) _dataState.postValue(FeedModelState(error = true))
+                    else _dataState.postValue(FeedModelState())
                 }
-//                    if (result.isEmpty()) _dataState.postValue(FeedModelState(error = true))
-//                    else _dataState.postValue(FeedModelState())
 
                 override fun onError(exception: Exception) {
                     println(exception)
@@ -104,16 +101,16 @@ class WeatherViewModel @Inject constructor(
     }
 
     fun getCoordinates(city: String) {
+        _dataState.value = FeedModelState(loading = true)
         _citySearchResult.postValue(listOf(CitySearchResult()))
         repository.getCoordinates(
             city,
             object : ApiService.WeatherCallback<List<CitySearchResult>> {
                 override fun onSuccess(result: List<CitySearchResult>) {
                     _citySearchResult.postValue(result.distinctBy { it.state })
-                    println(result)
+                    if (result.isEmpty()) _dataState.postValue(FeedModelState(error = true))
+                    else _dataState.postValue(FeedModelState())
                 }
-//                    if (result.isEmpty()) _dataState.postValue(FeedModelState(error = true))
-//                    else _dataState.postValue(FeedModelState())
 
                 override fun onError(exception: Exception) {
                     println(exception)

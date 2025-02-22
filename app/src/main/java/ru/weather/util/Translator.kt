@@ -23,7 +23,6 @@ object Translator {
             enRuTranslator.translate(it)
                 .addOnSuccessListener { result ->
                     id.text = result
-                    println(result)
                 }
                 .addOnFailureListener { exception ->
                     println(exception)
@@ -35,7 +34,6 @@ object Translator {
         enRuTranslator.downloadModelIfNeeded(conditions)
             .addOnSuccessListener {
                 translateCityName(id, text)
-                println(text)
             }
             .addOnFailureListener { exception ->
                 println(exception)

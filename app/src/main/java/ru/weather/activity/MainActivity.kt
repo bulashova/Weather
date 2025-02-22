@@ -33,6 +33,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     private val viewModel: WeatherViewModel by viewModels<WeatherViewModel>()
     private lateinit var mFusedLocationClient: FusedLocationProviderClient
     private val permissionId = 2
+    private lateinit var location: Pair<Double, Double>
+    private lateinit var state: String
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
@@ -60,6 +62,23 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean =
                 when (menuItem.itemId) {
+                    R.id.locale -> {
+
+                        viewModel.getMyLocation()?.value?.let {
+                            location = Pair(it.first, it.second)
+                        }
+                        viewModel.getLocality()?.value?.let {
+                            state = it
+                        }
+                        try {
+                            viewModel.get(location.first, location.second, state)
+                        } catch (e: Exception) {
+                            println(e)
+                        }
+                        findNavController(R.id.nav_host_fragment_container).navigate(R.id.nowWeatherFragment)
+                        true
+                    }
+
                     R.id.another -> {
                         findNavController(R.id.nav_host_fragment_container).navigate(R.id.searchFragment)
                         true

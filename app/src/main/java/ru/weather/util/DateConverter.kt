@@ -4,29 +4,22 @@ import android.os.Build
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import java.time.Instant
-import java.time.LocalDate
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
 object DateConverter {
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private val currentDate = LocalDate.now()
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    private val yesterday = currentDate.minusDays(1)
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    private val weekAgo = currentDate.minusDays(7)
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    private val twoWeekAgo = currentDate.minusDays(14)
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun utcToLocalDate(published: Long) =
-        Instant.ofEpochSecond(published)
+    fun utcToLocalDate(date: Long) =
+        Instant.ofEpochSecond(date)
             .atZone(ZoneId.systemDefault())
             .toLocalDate()
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun utcToLocalDateWithoutTime(date: Long) =
+        Instant.ofEpochSecond(date)
+            .atZone(ZoneId.systemDefault())
+            .toLocalDate().atStartOfDay()
 
 
     private fun utcToLocalDateTime(utc: Long) =
@@ -45,8 +38,18 @@ object DateConverter {
         id.text = date.format(formatter)
     }
 
+//    fun dateTextConvert(date: Long) : String {
+//        val date = utcToLocalDateTime(date)
+//        return date.format(formatter)
+//    }
+
     fun timeConvert(id: TextView, time: Long) {
         val time = utcToLocalDateTime(time)
         id.text = time.format(timeFormatter)
+    }
+
+    fun timeDayConvert(time: Long): String {
+        val time = utcToLocalDateTime(time)
+        return time.format(timeFormatter)
     }
 }

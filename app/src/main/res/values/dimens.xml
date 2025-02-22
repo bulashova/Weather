@@ -3,7 +3,7 @@
     <dimen name="padding_min">4dp</dimen>
     <dimen name="padding_small">8dp</dimen>
     <dimen name="padding_basic">16dp</dimen>
-    <dimen name="padding_large">8dp</dimen>
+    <dimen name="padding_large">24dp</dimen>
 
     <dimen name="text_small">12sp</dimen>
     <dimen name="text_basic">14sp</dimen>

@@ -7,7 +7,6 @@
     <style name="TextTitleStyle" parent="@style/TextAppearance.AppCompat.Body1">
         <item name="android:textSize">@dimen/text_basic</item>
         <item name="android:textColor">@color/title</item>
-
     </style>
 
     <style name="Button.Weather" parent="ThemeOverlay.AppCompat">
@@ -33,6 +32,10 @@
 
     <style name="TextTempStyle" parent="@style/TextAppearance.AppCompat.Body1">
         <item name="android:textSize">@dimen/text_card</item>
+    </style>
+
+    <style name="progressBar" parent="@style/Theme.AppCompat">
+        <item name="colorAccent">@color/button</item>
     </style>
 
 </resources>

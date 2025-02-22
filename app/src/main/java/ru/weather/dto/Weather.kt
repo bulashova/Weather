@@ -13,7 +13,7 @@ data class WeatherReport(
 
 data class List(
     val id: Long? = null,
-    val dt: Long? = null,
+    var dt: Long? = null,
     val main: Main? = null,
     val weather: kotlin.collections.List<Weather?> = listOf(), //погодные явления
     val clouds: Clouds? = null,

@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.ActionBar
 import androidx.core.view.MenuProvider
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -67,9 +68,21 @@ class StateChooseFragment : Fragment() {
             }
         })
 
-        binding.list.adapter = adapter
-        viewModel.citySearchResult.observe(viewLifecycleOwner) { cities ->
-            adapter.submitList(cities)
+        with(binding) {
+            list.adapter = adapter
+            viewModel.citySearchResult.observe(viewLifecycleOwner) { cities ->
+                adapter.submitList(cities)
+            }
+
+            viewModel.dataState.observe(viewLifecycleOwner) { state ->
+                progress.isVisible = (state.loading && !state.error)
+                list.isVisible = (!state.loading && !state.error)
+                errorText.isVisible = (!state.loading && state.error)
+                retry.isVisible = (!state.loading && state.error)
+                retry.setOnClickListener {
+                    findNavController().navigateUp()
+                }
+            }
         }
         return binding.root
     }

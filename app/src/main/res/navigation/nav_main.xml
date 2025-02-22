@@ -31,6 +31,9 @@
         <action
             android:id="@+id/action_nowWeatherFragment_to_dayWeatherFragment"
             app:destination="@id/dayWeatherFragment" />
+        <action
+            android:id="@+id/action_nowWeatherFragment_to_fiveDaysWeatherFragment"
+            app:destination="@id/fiveDaysWeatherFragment" />
     </fragment>
     <fragment
         android:id="@+id/feedFragment"
@@ -69,5 +72,19 @@
         <action
             android:id="@+id/action_dayWeatherFragment_to_nowWeatherFragment"
             app:destination="@id/nowWeatherFragment" />
+        <action
+            android:id="@+id/action_dayWeatherFragment_to_fiveDaysWeatherFragment"
+            app:destination="@id/fiveDaysWeatherFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/fiveDaysWeatherFragment"
+        android:name="ru.weather.activity.FiveDaysWeatherFragment"
+        android:label="FiveDaysWeatherFragment" >
+        <action
+            android:id="@+id/action_fiveDaysWeatherFragment_to_nowWeatherFragment"
+            app:destination="@id/nowWeatherFragment" />
+        <action
+            android:id="@+id/action_fiveDaysWeatherFragment_to_dayWeatherFragment"
+            app:destination="@id/dayWeatherFragment" />
     </fragment>
 </navigation>

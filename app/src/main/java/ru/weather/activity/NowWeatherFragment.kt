@@ -56,6 +56,9 @@ class NowWeatherFragment : Fragment() {
                     todayWeather.setOnClickListener {
                         findNavController().navigate(R.id.action_nowWeatherFragment_to_dayWeatherFragment)
                     }
+                    fiveDaysWeather.setOnClickListener {
+                        findNavController().navigate(R.id.action_nowWeatherFragment_to_fiveDaysWeatherFragment)
+                    }
                 }
             }
 
@@ -99,7 +102,6 @@ class NowWeatherFragment : Fragment() {
                     }
                 }
             }
-
         }
         return binding.root
     }
